@@ -16,7 +16,7 @@ pub async fn send_request(config: &Config, content: &str) -> Result<String, reqw
         .header(CONTENT_TYPE, "application/json")
         .header(AUTHORIZATION, format!("Bearer {}", config.token))
         .json(&json!({
-            "model": "yi-large",
+            "model": config.model,
             "messages": [{"role": "user", "content": prompt}],
             "temperature": 0.3
         }))

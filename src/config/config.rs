@@ -8,6 +8,7 @@ use std::path::PathBuf;
 pub struct Config {
     pub api: String,
     pub token: String,
+    pub model: String,
 }
 
 pub fn get_config_path() -> PathBuf {
@@ -23,6 +24,7 @@ pub fn config_exists() -> bool {
 pub fn init_config() {
     let mut api = String::new();
     let mut token = String::new();
+    let mut model = String::new();
 
     print!("Enter API URL: ");
     io::stdout().flush().unwrap();
@@ -30,10 +32,14 @@ pub fn init_config() {
     print!("Enter API Token: ");
     io::stdout().flush().unwrap();
     io::stdin().read_line(&mut token).unwrap();
+    print!("Enter Model: ");
+    io::stdout().flush().unwrap();
+    io::stdin().read_line(&mut model).unwrap();
 
     let config = Config {
         api: api.trim().to_string(),
         token: token.trim().to_string(),
+        model: model.trim().to_string(),
     };
 
     let config_path = get_config_path();
@@ -55,6 +61,7 @@ pub fn read_config() -> Option<Config> {
 }
 
 pub fn validate_config(config: &Config) -> bool {
-    !config.api.trim().is_empty() && !config.token.trim().is_empty()
-    //        && !config.model.trim().is_empty()
+    !config.api.trim().is_empty()
+        && !config.token.trim().is_empty()
+        && !config.model.trim().is_empty()
 }
